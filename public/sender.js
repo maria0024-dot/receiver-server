@@ -1,3 +1,4 @@
+console.log("sender loaded");
 let cookies = {};
 
 document.cookie.split("; ").forEach(cookie => {
