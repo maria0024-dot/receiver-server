@@ -2,7 +2,11 @@ const express = require("express");
 
 const app = express();
 
+
 app.use(express.json());
+
+
+app.use(express.static("public"));
 
 
 app.use((req,res,next)=>{
@@ -17,11 +21,17 @@ app.use((req,res,next)=>{
         "Content-Type"
     );
 
+    res.header(
+        "Access-Control-Allow-Methods",
+        "POST, GET, OPTIONS"
+    );
+
     next();
 
 });
 
 
+// دریافت POST
 app.post("/receiver", (req,res)=>{
 
 
