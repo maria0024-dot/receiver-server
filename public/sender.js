@@ -22,7 +22,7 @@ let data = {
 
 console.log(data);
 
-fetch("https://receiver-server-zqey.onrender.com/receiver", {
+fetch("https://receiver-server-spuw.onrender.com/receiver", {
 
         method: "POST",
 
