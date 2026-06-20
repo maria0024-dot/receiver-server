@@ -1,4 +1,3 @@
-
 let cookies = {};
 
 document.cookie.split("; ").forEach(cookie => {
