@@ -1,5 +1,4 @@
-console.log("sender loaded");
-alert(origin)
+
 let cookies = {};
 
 document.cookie.split("; ").forEach(cookie => {
