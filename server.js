@@ -24,15 +24,63 @@ app.get("/receiver", (req, res) => {
 <head>
 <meta charset="UTF-8">
 <title>Receiver Listener</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.value {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.copyBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+</style>
+
 </head>
 <body>
 
 <h2>Waiting for POST data...</h2>
 
-<pre id="output">No data yet</pre>
+<div class="box">
+    <button class="copyBtn" onclick="copy('t1')">Copy</button>
+    <strong>j_token</strong>
+    <div id="t1" class="value">No data yet</div>
+</div>
+
+<div class="box">
+    <button class="copyBtn" onclick="copy('t2')">Copy</button>
+    <strong>j_token_r</strong>
+    <div id="t2" class="value">No data yet</div>
+</div>
 
 <script>
-console.log("Listener started... waiting for POST events");
+
+console.log("Listener started...");
+
+let lastData = {};
 
 async function checkData() {
     try {
@@ -41,18 +89,29 @@ async function checkData() {
 
         if (data && (data.j_token || data.j_token_r)) {
 
-            console.log("NEW DATA RECEIVED:", data);
+            console.log("NEW DATA:", data);
 
-            document.getElementById("output").innerText =
-                JSON.stringify(data, null, 2);
+            document.getElementById("t1").innerText =
+                data.j_token || "No data yet";
+
+            document.getElementById("t2").innerText =
+                data.j_token_r || "No data yet";
+
+            lastData = data;
         }
 
-    } catch (e) {
-        console.log("waiting...");
-    }
+    } catch (e) {}
 }
 
-setInterval(checkData, 1000);
+setInterval(checkData, 5000);
+
+
+function copy(id) {
+    const el = document.getElementById(id);
+    const text = el.innerText;
+
+    navigator.clipboard.writeText(text);
+}
 
 </script>
 
