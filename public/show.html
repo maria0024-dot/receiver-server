@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Show Data</title>
+<style>
+body{
+    font-family: Arial;
+    padding:20px;
+}
+.box{
+    margin-bottom:20px;
+}
+input{
+    width:500px;
+    padding:8px;
+}
+button{
+    padding:8px 12px;
+}
+</style>
+</head>
+<body>
+
+<h2>Cookie 1</h2>
+<div class="box">
+    <input id="cookie1" readonly>
+    <button onclick="copyValue('cookie1')">Copy</button>
+</div>
+
+<h2>Cookie 2</h2>
+<div class="box">
+    <input id="cookie2" readonly>
+    <button onclick="copyValue('cookie2')">Copy</button>
+</div>
+
+<script>
+async function loadData() {
+    const res = await fetch('/data');
+    const data = await res.json();
+
+    document.getElementById('cookie1').value =
+        data.cookie1 || '';
+
+    document.getElementById('cookie2').value =
+        data.cookie2 || '';
+}
+
+async function copyValue(id) {
+    const value =
+        document.getElementById(id).value;
+
+    await navigator.clipboard.writeText(value);
+
+    alert('Copied!');
+}
+
+loadData();
+
+// هر ۲ ثانیه اطلاعات را به‌روزرسانی می‌کند
+setInterval(loadData, 2000);
+</script>
+
+</body>
+</html>
