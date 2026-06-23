@@ -140,6 +140,7 @@ app.post("/receiver", (req, res) => {
 
 
 app.get("/latest", (req, res) => {
+    lastData = null;
     res.json(lastData || {});
 });
 
